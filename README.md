@@ -30,6 +30,8 @@ Playwright + TypeScript test suite for the [Surfsight Partner staging app](https
 │   ├── organizations.spec.ts
 │   ├── subresellers.spec.ts
 │   └── users.spec.ts
+├── fixtures/index.ts                # Custom test with auth page + 7 POM fixtures
+├── playwright/global-setup.ts       # One-time login → saves .auth/user.json
 ├── config/endpoints.ts              # APP_URL
 ├── constants/routes.ts              # Route path constants
 ├── constants/timeouts.ts            # DEFAULT_TIMEOUT_MS
@@ -70,6 +72,43 @@ npx playwright test --headed
 npm run type-check
 ```
 
+## Authentication
+
+Tests use a **global setup** (`playwright/global-setup.ts`) that logs in once before all tests and saves the browser storage state to `.auth/user.json`. Each test then reuses this auth state via a custom `page` fixture — no per-test login required.
+
+The `.auth/` directory is git-ignored. It is created automatically on first run.
+
+## Fixtures
+
+All specs import `test` and `expect` from `fixtures/index.ts` instead of `@playwright/test`. This provides pre-authenticated page object fixtures for every section of the app:
+
+| Fixture | Page object |
+|---|---|
+| `dashboardPage` | `DashboardPage` |
+| `devicesPage` | `DevicesPage` |
+| `deviceHealthPage` | `DeviceHealthPage` |
+| `deviceAlarmsPage` | `DeviceAlarmsPage` |
+| `organizationsPage` | `OrganizationsPage` |
+| `subResellersPage` | `SubResellersPage` |
+| `usersPage` | `UsersPage` |
+
+Each spec uses `test.describe` with a `beforeEach` that navigates to the page and waits for a stable element before assertions run:
+
+```typescript
+import { DEVICES_PATH } from '../constants/routes';
+import { test, expect } from '../fixtures';
+
+test.describe('Devices Page', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto(DEVICES_PATH);
+  });
+
+  test('shows Device Name column', async ({ devicesPage }) => {
+    await expect(devicesPage.colDeviceName).toBeVisible();
+  });
+});
+```
+
 ## Page objects
 
 All authenticated page objects extend `BasePage`, which provides:
@@ -88,15 +127,6 @@ All authenticated page objects extend `BasePage`, which provides:
 const login = new LoginPage(page);
 await login.goto();
 await login.login(email, password); // fills, accepts terms, submits, waits for nav
-```
-
-### Other pages
-
-```typescript
-const devices = new DevicesPage(page);
-await devices.goto();                         // navigate + wait for stable element
-await devices.filterByDeviceName('camera1');  // fill column search input
-await expect(devices.colImei).toBeVisible();  // assert column header visible
 ```
 
 ## App notes
