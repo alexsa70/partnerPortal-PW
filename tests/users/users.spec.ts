@@ -1,7 +1,7 @@
 /**
  * Smoke tests: UsersPage — verifies the Users list page loads correctly.
  */
-import { test, expect } from '../fixtures';
+import { test, expect } from '../../fixtures';
 
 test.describe( 'Users Page',() => {
   test.beforeEach(async ({usersPage}) => {

@@ -1,8 +1,8 @@
 /**
  * Smoke tests: DeviceAlarmsPage — verifies the Device Alarms page and tabs load correctly.
  */
-import { DEVICE_ALARMS_PATH } from '../constants/routes';
-import { test, expect } from '../fixtures';
+import { DEVICE_ALARMS_PATH } from '../../constants/routes';
+import { test, expect } from '../../fixtures';
 
 test.describe('Device Alarms Page', () => {
   test.describe.configure({mode: 'serial'})

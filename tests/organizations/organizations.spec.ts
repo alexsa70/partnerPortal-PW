@@ -1,8 +1,8 @@
 /**
  * Smoke tests: OrganizationsPage — verifies the Organizations list page loads correctly.
  */
-import { ORGANIZATIONS_PATH } from '../constants/routes';
-import { test, expect } from '../fixtures';
+import { ORGANIZATIONS_PATH } from '../../constants/routes';
+import { test, expect } from '../../fixtures';
 
 test.describe('Organizations Page', () => {
   test.beforeEach(async ({ page }) => {

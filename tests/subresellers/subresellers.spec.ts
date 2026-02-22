@@ -1,8 +1,8 @@
 /**
  * Smoke tests: SubResellersPage — verifies the Sub-Partners list page loads correctly.
  */
-import { SUBRESELLERS_PATH } from '../constants/routes';
-import { test, expect } from '../fixtures';
+import { SUBRESELLERS_PATH } from '../../constants/routes';
+import { test, expect } from '../../fixtures';
 
 test.describe('Sub-Partners Page', () => {
   test.beforeEach(async ({ page }) => {

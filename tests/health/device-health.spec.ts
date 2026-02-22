@@ -1,8 +1,8 @@
 /**
  * Smoke tests: DeviceHealthPage — verifies the Device Health page and tabs load correctly.
  */
-import { DEVICE_HEALTH_PATH } from '../constants/routes';
-import { test, expect } from '../fixtures';
+import { DEVICE_HEALTH_PATH } from '../../constants/routes';
+import { test, expect } from '../../fixtures';
 
 test.describe('Device Health Page', () => {
   test.beforeEach(async ({ page }) => {

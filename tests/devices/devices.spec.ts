@@ -1,8 +1,8 @@
 /**
  * Smoke tests: DevicesPage — verifies the Devices list page loads correctly.
  */
-import { DEVICES_PATH } from '../constants/routes';
-import { test, expect } from '../fixtures';
+import { DEVICES_PATH } from '../../constants/routes';
+import { test, expect } from '../../fixtures';
 
 test.describe('Devices Page', () => {
   test.beforeEach(async ({ page }) => {

@@ -1,8 +1,8 @@
 /**
  * Smoke tests: DashboardPage — verifies the partner dashboard loads correctly.
  */
-import { DASHBOARD_PATH } from '../constants/routes';
-import { test, expect } from '../fixtures';
+import { DASHBOARD_PATH } from '../../constants/routes';       
+import { test, expect } from '../../fixtures';     
 
 test.describe('Dashboard Page', () => {
   test.beforeEach(async ({ page }) => {
