@@ -22,14 +22,16 @@ Playwright + TypeScript test suite for the [Surfsight Partner staging app](https
 │   ├── subresellers/                # Sub-Partners list
 │   └── users/                       # Users list
 ├── tests/
-│   ├── login.spec.ts
-│   ├── dashboard.spec.ts
-│   ├── devices.spec.ts
-│   ├── device-health.spec.ts
-│   ├── device-alarms.spec.ts
-│   ├── organizations.spec.ts
-│   ├── subresellers.spec.ts
-│   └── users.spec.ts
+│   ├── login/
+│   │   ├── login.spec.ts
+│   │   └── inspect-login-page.spec.ts
+│   ├── dashboard/dashboard.spec.ts
+│   ├── devices/devices.spec.ts
+│   ├── health/device-health.spec.ts
+│   ├── alarms/device-alarms.spec.ts
+│   ├── organizations/organizations.spec.ts
+│   ├── subresellers/subresellers.spec.ts
+│   └── users/users.spec.ts
 ├── fixtures/index.ts                # Custom test with auth page + 7 POM fixtures
 ├── playwright/global-setup.ts       # One-time login → saves .auth/user.json
 ├── config/endpoints.ts              # APP_URL
