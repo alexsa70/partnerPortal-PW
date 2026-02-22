@@ -1,56 +1,39 @@
 /**
  * Smoke tests: DeviceHealthPage — verifies the Device Health page and tabs load correctly.
  */
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/login/LoginPage';
-import { DeviceHealthPage } from '../pages/device-health/DeviceHealthPage';
+import { test, expect } from '../fixtures';
 
-const EMAIL = process.env.TEST_EMAIL ?? '';
-const PASSWORD = process.env.TEST_PASSWORD ?? '';
-
-test.beforeEach(async ({ page }) => {
-  const login = new LoginPage(page);
-  await login.goto();
-  await login.login(EMAIL, PASSWORD);
+test('device health page loads and shows tabs', async ({ deviceHealthPage }) => {
+  await deviceHealthPage.goto();
+  await expect(deviceHealthPage.tabDeviceHealth).toBeVisible();
+  await expect(deviceHealthPage.tabSdCardRetention).toBeVisible();
+  await expect(deviceHealthPage.tabRmaDevices).toBeVisible();
 });
 
-test('device health page loads and shows tabs', async ({ page }) => {
-  const deviceHealth = new DeviceHealthPage(page);
-  await deviceHealth.goto();
-  await expect(deviceHealth.tabDeviceHealth).toBeVisible();
-  await expect(deviceHealth.tabSdCardRetention).toBeVisible();
-  await expect(deviceHealth.tabRmaDevices).toBeVisible();
+test('device health tab is selected by default', async ({ deviceHealthPage }) => {
+  await deviceHealthPage.goto();
+  await expect(deviceHealthPage.tabDeviceHealth).toHaveAttribute('aria-selected', 'true');
 });
 
-test('device health tab is selected by default', async ({ page }) => {
-  const deviceHealth = new DeviceHealthPage(page);
-  await deviceHealth.goto();
-  await expect(deviceHealth.tabDeviceHealth).toHaveAttribute('aria-selected', 'true');
+test('device health page shows Device Name column', async ({ deviceHealthPage }) => {
+  await deviceHealthPage.goto();
+  await expect(deviceHealthPage.colDeviceName).toBeVisible();
 });
 
-test('device health page shows Device Name column', async ({ page }) => {
-  const deviceHealth = new DeviceHealthPage(page);
-  await deviceHealth.goto();
-  await expect(deviceHealth.colDeviceName).toBeVisible();
+test('device health page shows key table columns', async ({ deviceHealthPage }) => {
+  await deviceHealthPage.goto();
+  await expect(deviceHealthPage.colImei).toBeVisible();
+  await expect(deviceHealthPage.colOrganization).toBeVisible();
+  await expect(deviceHealthPage.colLastConnectedAt).toBeVisible();
 });
 
-test('device health page shows key table columns', async ({ page }) => {
-  const deviceHealth = new DeviceHealthPage(page);
-  await deviceHealth.goto();
-  await expect(deviceHealth.colImei).toBeVisible();
-  await expect(deviceHealth.colOrganization).toBeVisible();
-  await expect(deviceHealth.colLastConnectedAt).toBeVisible();
+test('device health page has Device Name search input', async ({ deviceHealthPage }) => {
+  await deviceHealthPage.goto();
+  await expect(deviceHealthPage.searchDeviceName).toBeVisible();
 });
 
-test('device health page has Device Name search input', async ({ page }) => {
-  const deviceHealth = new DeviceHealthPage(page);
-  await deviceHealth.goto();
-  await expect(deviceHealth.searchDeviceName).toBeVisible();
-});
-
-test('clicking SD card retention tab changes selection', async ({ page }) => {
-  const deviceHealth = new DeviceHealthPage(page);
-  await deviceHealth.goto();
-  await deviceHealth.clickTab('SD card retention');
-  await expect(deviceHealth.tabSdCardRetention).toHaveAttribute('aria-selected', 'true');
+test('clicking SD card retention tab changes selection', async ({ deviceHealthPage }) => {
+  await deviceHealthPage.goto();
+  await deviceHealthPage.clickTab('SD card retention');
+  await expect(deviceHealthPage.tabSdCardRetention).toHaveAttribute('aria-selected', 'true');
 });

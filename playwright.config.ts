@@ -12,6 +12,7 @@ process.loadEnvFile?.();
  */
 export default defineConfig({
   testDir: './tests',
+  globalSetup: './playwright/global-setup',
   timeout: DEFAULT_TIMEOUT_MS,
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
