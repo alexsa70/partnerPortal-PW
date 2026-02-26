@@ -80,6 +80,11 @@ export class LoginPage {
     return this.page.getByPlaceholder('Email');
   }
 
+  /** Password input locator (for tests that need to assert visibility). */
+  get passwordInput() {
+    return this.page.getByPlaceholder('Password');
+  }
+
   /** Terms & Conditions checkbox. */
   get termsCheckbox() {
     return this.page.locator('md-checkbox').first();
@@ -88,5 +93,10 @@ export class LoginPage {
   /** Log In button. */
   get submitButton() {
     return this.page.getByRole('button', { name: 'Log In' });
+  }
+
+  /** Forgot password link. */
+  get forgotPasswordLink() {
+    return this.page.getByText('Forgot Password ?');
   }
 }

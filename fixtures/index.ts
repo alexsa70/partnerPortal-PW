@@ -16,8 +16,10 @@ import { DeviceAlarmsPage } from '../pages/device-alarms/DeviceAlarmsPage';
 import { OrganizationsPage } from '../pages/organizations/OrganizationsPage';
 import { SubResellersPage } from '../pages/subresellers/SubResellersPage';
 import { UsersPage } from '../pages/users/UsersPage';
+import { LoginPage } from '../pages/login/LoginPage';
 
 type AppFixtures = {
+  loginPage: LoginPage;
   dashboardPage: DashboardPage;
   devicesPage: DevicesPage;
   deviceHealthPage: DeviceHealthPage;
@@ -34,6 +36,10 @@ export const test = base.extend<AppFixtures>({
     const page = await context.newPage();
     await use(page);
     await context.close();
+  },
+
+  loginPage: async ({ page }, use) => {
+    await use(new LoginPage(page));
   },
 
   dashboardPage: async ({ page }, use) => {
