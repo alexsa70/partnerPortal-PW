@@ -60,18 +60,28 @@ export class DashboardPage extends BasePage {
 
   // ── Quick-links ────────────────────────────────────────────────────────────
 
-  /** "Show all" link under Devices by organization. Navigates to Organizations. */
+  /** "Show all" link in the Devices by organization table. Navigates to Organizations. */
   get showAllOrganizations() {
-    return this.page.getByRole('link', { name: 'Show all' }).first();
+    return this.page.getByRole('table').filter({ hasText: 'Devices by organization' }).getByRole('link', { name: 'Show all' });
   }
 
-  /** "Show all" link under Device Alarms. */
-  get showAllAlarms() {
-    return this.page.getByRole('link', { name: 'Show all' }).nth(1);
+  /** "Show all" link in the Alarms by organization table. Navigates to Device Alarms. */
+  get showAllAlarmsByOrg() {
+    return this.page.getByRole('table').filter({ hasText: 'Alarms by organization' }).getByRole('link', { name: 'Show all' });
   }
 
-  /** "Show all" link under Device Health. */
-  get showAllDeviceHealth() {
-    return this.page.getByRole('link', { name: 'Show all' }).nth(2);
+  /** "Show all" link in the Failed recording health by organization table. Navigates to Device Health. */
+  get showAllFailedRecordingHealth() {
+    return this.page.getByRole('table').filter({ hasText: 'Failed recording health by organization' }).getByRole('link', { name: 'Show all' });
+  }
+
+  /** "Show all" link in the Recording health report table. Navigates to Device Health. */
+  get showAllRecordingHealth() {
+    return this.page.getByRole('table').filter({ hasText: 'Recording health report' }).getByRole('link', { name: 'Show all' });
+  }
+
+  /** "Show all" link in the Alarms by type table. Navigates to Device Alarms. */
+  get showAllAlarmsByType() {
+    return this.page.getByRole('table').filter({ hasText: 'Alarms by type' }).getByRole('link', { name: 'Show all' });
   }
 }
