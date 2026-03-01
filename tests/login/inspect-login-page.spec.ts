@@ -83,4 +83,5 @@ test('inspect login page DOM and log selectors', async ({ page }) => {
   const formSnippet = await page.locator('form, [role="form"], .login-form, main, [class*="login"]').first().evaluate((el) => el?.outerHTML?.slice(0, 3000) || 'no form container').catch(() => 'no form');
   console.log('\n--- Form container snippet (first 3000 chars) ---');
   console.log(formSnippet);
+  console.log('inspect login page DOM and log selectors PASS successfully');
 });
