@@ -71,13 +71,6 @@ export class DevicesPage extends BasePage {
     return this.colHeader('Device Name');
   }
 
-  // ── Result rows ───────────────────────────────────────────────────────────
-
-  /** Device name cell in the first result row (tbody). Use after filtering. */
-  get firstResultDeviceName() {
-    return this.page.locator('tbody tr').first().locator('td').first();
-  }
-
   get colImei() {
     return this.colHeader('IMEI');
   }
@@ -101,6 +94,36 @@ export class DevicesPage extends BasePage {
   get colSerialNumber() {
     return this.colHeader('Serial Number');
   }
+  // ── Result rows ───────────────────────────────────────────────────────────
+
+  /**
+   * Returns the td cell in the first tbody row that corresponds to the given
+   * column header text. Scopes to thead's first row to skip filter-input rows.
+   */
+  private async firstRowCellByColumn(columnName: string) {
+    const headers = this.page.locator('thead tr').first().locator('th');
+    const count = await headers.count();
+    for (let i = 0; i < count; i++) {
+      const text = await headers.nth(i).textContent();
+      if (text?.trim() === columnName) {
+        return this.page.locator('tbody tr').first().locator('td').nth(i);
+      }
+    }
+    throw new Error(`Column "${columnName}" not found in table`);
+  }
+
+  async firstResultDeviceName() { return this.firstRowCellByColumn('Device Name'); }
+  async firstResultImei() { return this.firstRowCellByColumn('IMEI'); }
+  async firstResultBillingStatus() { return this.firstRowCellByColumn('Billing Status'); }
+  async firstResultSimNumber() { return this.firstRowCellByColumn('Sim Number'); }
+  async firstResultModel() { return this.firstRowCellByColumn('Model'); }
+  async firstResultOrganization() { return this.firstRowCellByColumn('Organization'); }
+  async firstResultDataProfile() { return this.firstRowCellByColumn('Data Profile'); }
+  async firstResultPartner() { return this.firstRowCellByColumn('Partner/Sub-Partner'); }
+  async firstResultAuxCams() { return this.firstRowCellByColumn('Aux cams: last month'); }
+  async firstResultPartnerDatabase() { return this.firstRowCellByColumn('Partner Database'); }
+  async firstResultVersion() { return this.firstRowCellByColumn('Version'); }
+  async firstResultSerialNumber() { return this.firstRowCellByColumn('Serial Number'); }
 
   // ── Actions ───────────────────────────────────────────────────────────────
 
@@ -114,5 +137,9 @@ export class DevicesPage extends BasePage {
 
   async filterByOrganization(orgName: string): Promise<void> {
     await this.searchOrganization.fill(orgName);
+  }
+
+  async filterBySimNumber(simNumber: string): Promise<void> {
+    await this.searchSimNumber.fill(simNumber);
   }
 }
