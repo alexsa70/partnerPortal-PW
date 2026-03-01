@@ -5,3 +5,12 @@ blob-report/
 dist/
 .auth/
 .env
+.cursorrules
+.cursor/plans/
+.cursor/plans/subtasks/ 
+.cursor/skills/
+.cursor/agents/
+
+.claude/
+.cursor/    
+
