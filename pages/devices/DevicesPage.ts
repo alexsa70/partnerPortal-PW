@@ -71,6 +71,13 @@ export class DevicesPage extends BasePage {
     return this.colHeader('Device Name');
   }
 
+  // ── Result rows ───────────────────────────────────────────────────────────
+
+  /** Device name cell in the first result row (tbody). Use after filtering. */
+  get firstResultDeviceName() {
+    return this.page.locator('tbody tr').first().locator('td').first();
+  }
+
   get colImei() {
     return this.colHeader('IMEI');
   }
