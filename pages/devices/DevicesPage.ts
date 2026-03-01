@@ -125,6 +125,76 @@ export class DevicesPage extends BasePage {
   async firstResultVersion() { return this.firstRowCellByColumn('Version'); }
   async firstResultSerialNumber() { return this.firstRowCellByColumn('Serial Number'); }
 
+  // ── Dropdown filter triggers ──────────────────────────────────────────────
+
+  /**
+   * Returns the dropdown trigger (md-menu-bar) in the filter row for the
+   * given column. Click it to open the option list, then use dropdownOption().
+   */
+  private dropdownFilterByColumn(columnName: string) {
+    return this.page.locator('thead tr').first().locator('th').filter({ hasText: columnName })
+      .locator('md-menu-bar');
+  }
+
+  /** Billing Status dropdown trigger. Options: Pending Activation | Activated | Deactivated | Suspended */
+  get dropdownBillingStatus() {
+    return this.dropdownFilterByColumn('Billing Status');
+  }
+
+  /** Aux Billing dropdown trigger. Options: Enabled | Disabled */
+  get dropdownAuxBilling() {
+    return this.dropdownFilterByColumn('Aux Billing');
+  }
+
+  /** ADAS Calibration Type dropdown trigger.
+   *  Options: Calibrated (auto) | Calibrated (manual) | Calibrated (auto recalibrated) | Calibrated (AI-14) | Not Calibrated */
+  get dropdownAdasCalibrationType() {
+    return this.dropdownFilterByColumn('ADAS Calibration Type');
+  }
+
+  /** ADAS Calibration Status dropdown trigger.
+   *  Options: Not Started | Pending | Completed | Failed */
+  get dropdownAdasCalibrationStatus() {
+    return this.dropdownFilterByColumn('ADAS Calibration Status');
+  }
+
+  /** Returns a visible dropdown option by its label text. Call after opening a dropdown. */
+  dropdownOption(optionText: string) {
+    return this.page.getByRole('menuitem', { name: optionText, exact: true });
+  }
+
+  /** Select an option from a dropdown filter column. Opens the dropdown then clicks the option. */
+  async selectDropdownFilter(columnName: string, optionText: string): Promise<void> {
+    await this.dropdownFilterByColumn(columnName).click();
+    await this.dropdownOption(optionText).click();
+  }
+
+  // ── Date of Activation filter ─────────────────────────────────────────────
+
+  /** Date range picker for Date of Activation. Click to open the calendar. */
+  get filterDateOfActivation() {
+    return this.page.locator('[aria-label="activationDate"]');
+  }
+
+  // ── Row action menu ───────────────────────────────────────────────────────
+
+  /**
+   * Returns the ⋮ action menu button for a given row (0-based index).
+   * Click it to open the action list, then use rowActionItem().
+   */
+  rowActionMenuButton(rowIndex = 0) {
+    return this.page.locator('tbody tr').nth(rowIndex).getByRole('button', { name: 'Device information' });
+  }
+
+  /**
+   * Returns a row action menu item by name. Call after clicking rowActionMenuButton().
+   * Available items: Device information | Data usage | Reboot camera | Format SD card |
+   *   Reset PIN | Reset Factory Settings | Update AUX billing | Access Organization
+   */
+  rowActionItem(itemName: string) {
+    return this.page.getByRole('menuitem', { name: itemName, exact: true });
+  }
+
   // ── Actions ───────────────────────────────────────────────────────────────
 
   async filterByDeviceName(name: string): Promise<void> {
@@ -141,5 +211,25 @@ export class DevicesPage extends BasePage {
 
   async filterBySimNumber(simNumber: string): Promise<void> {
     await this.searchSimNumber.fill(simNumber);
+  }
+
+  async filterByModel(model: string): Promise<void> {
+    await this.searchModel.fill(model);
+  }
+
+  async filterByVersion(version: string): Promise<void> {
+    await this.searchVersion.fill(version);
+  } 
+
+  async filterBySerialNumber(serialNumber: string): Promise<void> {
+    await this.searchSerialNumber.fill(serialNumber);
+  }
+
+  async filterByDataProfile(dataProfile: string): Promise<void> {
+    await this.searchDataProfile.fill(dataProfile);
+  }
+
+  async filterByPartner(partner: string): Promise<void> {
+    await this.searchPartner.fill(partner);
   }
 }
