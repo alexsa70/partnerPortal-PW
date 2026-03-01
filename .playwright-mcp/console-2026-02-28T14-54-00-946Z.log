@@ -1,0 +1,13 @@
+[     911ms] [WARNING] pascalprecht.translate.$translateSanitization: No sanitization strategy has been configured. This can have serious security implications. See http://angular-translate.github.io/docs/#/guide/19_security for details. @ https://partner.stage2.surfsight.net/vendor.8ba4ef9d11f1a1e0f48c.bundle.js:30
+[    2008ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://partner.stage2.surfsight.net/favicon.ico:0
+[    2016ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://api.amplitude.com/:0
+[   49648ms] [WARNING] Markup '<md-button flex></md-button>' may not work as expected in IE Browsers. Consult 'https://github.com/philipwalton/flexbugs#9-some-html-elements-cant-be-flex-containers' for details. @ https://partner.stage2.surfsight.net/vendor.8ba4ef9d11f1a1e0f48c.bundle.js:30
+[   50086ms] [WARNING] ARIA: Attribute " aria-label ", required for accessibility, is missing on node: JSHandle@node @ https://partner.stage2.surfsight.net/vendor.8ba4ef9d11f1a1e0f48c.bundle.js:30
+[   50086ms] [WARNING] ARIA: Attribute " aria-label ", required for accessibility, is missing on node: JSHandle@node @ https://partner.stage2.surfsight.net/vendor.8ba4ef9d11f1a1e0f48c.bundle.js:30
+[   50087ms] [WARNING] ARIA: Attribute " aria-label ", required for accessibility, is missing on node: JSHandle@node @ https://partner.stage2.surfsight.net/vendor.8ba4ef9d11f1a1e0f48c.bundle.js:30
+[   50087ms] [WARNING] ARIA: Attribute " aria-label ", required for accessibility, is missing on node: JSHandle@node @ https://partner.stage2.surfsight.net/vendor.8ba4ef9d11f1a1e0f48c.bundle.js:30
+[   50087ms] [WARNING] ARIA: Attribute " aria-label ", required for accessibility, is missing on node: JSHandle@node @ https://partner.stage2.surfsight.net/vendor.8ba4ef9d11f1a1e0f48c.bundle.js:30
+[   50087ms] [WARNING] ARIA: Attribute " aria-label ", required for accessibility, is missing on node: JSHandle@node @ https://partner.stage2.surfsight.net/vendor.8ba4ef9d11f1a1e0f48c.bundle.js:30
+[   50087ms] [WARNING] ARIA: Attribute " aria-label ", required for accessibility, is missing on node: JSHandle@node @ https://partner.stage2.surfsight.net/vendor.8ba4ef9d11f1a1e0f48c.bundle.js:30
+[   50100ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://api.amplitude.com/:0
+[   50388ms] [WARNING] [noticeable] Skipping cross-device synchronization because it is disabled at project level @ https://sdk.noticeable.io/l.js:20

@@ -179,6 +179,11 @@ export class DevicesPage extends BasePage {
     return this.page.locator('[aria-label="activationDate"]');
   }
 
+  /** Returns a quick date filter option inside the Date of Activation picker. */
+  datePickerOption(optionText: string) {
+    return this.page.locator('.md-open-menu-container:not([aria-hidden="true"])').getByText(optionText).first();
+  }
+
   // ── Row action menu ───────────────────────────────────────────────────────
 
   /**
@@ -186,7 +191,8 @@ export class DevicesPage extends BasePage {
    * Click it to open the action list, then use rowActionItem().
    */
   rowActionMenuButton(rowIndex = 0) {
-    return this.page.locator('tbody tr').nth(rowIndex).getByRole('button', { name: 'Device information' });
+    //return this.page.locator('tbody tr').nth(rowIndex).locator('td').last().locator('button').first();
+    return this.page.getByRole('menubar').filter({ hasText: 'Device information Data usage' });
   }
 
   /**
@@ -195,7 +201,12 @@ export class DevicesPage extends BasePage {
    *   Reset PIN | Reset Factory Settings | Update AUX billing | Access Organization
    */
   rowActionItem(itemName: string) {
-    return this.page.getByRole('menuitem', { name: itemName, exact: true });
+    return this.page.locator('button[aria-label="' + itemName + '"]');
+  }
+
+  /** Click a row action menu item and optionally wait for menu to close. */
+  async clickRowActionItem(itemName: string): Promise<void> {
+    await this.rowActionItem(itemName).click({ force: true });
   }
 
   // ── Actions ───────────────────────────────────────────────────────────────
