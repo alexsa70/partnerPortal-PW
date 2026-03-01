@@ -64,6 +64,9 @@ export class DevicesPage extends BasePage {
   get searchSerialNumber() {
     return this.page.getByRole('textbox', { name: 'serialNumber' });
   }
+  get searchBillingStatus() {
+    return this.page.getByRole('textbox', { name: 'billingStatus' });
+  }
 
   // ── Column headers ────────────────────────────────────────────────────────
 
@@ -128,44 +131,44 @@ export class DevicesPage extends BasePage {
   // ── Dropdown filter triggers ──────────────────────────────────────────────
 
   /**
-   * Returns the dropdown trigger (md-menu-bar) in the filter row for the
-   * given column. Click it to open the option list, then use dropdownOption().
+   * Returns the md-menu-bar dropdown trigger in the filter row (thead tr nth(1))
+   * for the given column. Resolves column index from the header row.
    */
-  private dropdownFilterByColumn(columnName: string) {
-    return this.page.locator('thead tr').first().locator('th').filter({ hasText: columnName })
-      .locator('md-menu-bar');
+  private async dropdownFilterByColumn(columnName: string) {
+    const headers = this.page.locator('thead tr').first().locator('th');
+    const count = await headers.count();
+    for (let i = 0; i < count; i++) {
+      const text = await headers.nth(i).textContent();
+      if (text?.trim() === columnName) {
+        return this.page.locator('thead tr').nth(1).locator('th').nth(i).locator('md-menu-bar');
+      }
+    }
+    throw new Error(`Column "${columnName}" not found in table`);
   }
 
   /** Billing Status dropdown trigger. Options: Pending Activation | Activated | Deactivated | Suspended */
-  get dropdownBillingStatus() {
-    return this.dropdownFilterByColumn('Billing Status');
-  }
+  async dropdownBillingStatus() { return this.dropdownFilterByColumn('Billing Status'); }
 
   /** Aux Billing dropdown trigger. Options: Enabled | Disabled */
-  get dropdownAuxBilling() {
-    return this.dropdownFilterByColumn('Aux Billing');
-  }
+  async dropdownAuxBilling() { return this.dropdownFilterByColumn('Aux Billing'); }
 
   /** ADAS Calibration Type dropdown trigger.
    *  Options: Calibrated (auto) | Calibrated (manual) | Calibrated (auto recalibrated) | Calibrated (AI-14) | Not Calibrated */
-  get dropdownAdasCalibrationType() {
-    return this.dropdownFilterByColumn('ADAS Calibration Type');
-  }
+  async dropdownAdasCalibrationType() { return this.dropdownFilterByColumn('ADAS Calibration Type'); }
 
   /** ADAS Calibration Status dropdown trigger.
    *  Options: Not Started | Pending | Completed | Failed */
-  get dropdownAdasCalibrationStatus() {
-    return this.dropdownFilterByColumn('ADAS Calibration Status');
-  }
+  async dropdownAdasCalibrationStatus() { return this.dropdownFilterByColumn('ADAS Calibration Status'); }
 
-  /** Returns a visible dropdown option by its label text. Call after opening a dropdown. */
+  /** Returns a dropdown option button by label. Call after opening a dropdown. */
   dropdownOption(optionText: string) {
-    return this.page.getByRole('menuitem', { name: optionText, exact: true });
+    return this.page.locator('.md-open-menu-container[aria-hidden="false"]')
+      .getByRole('button', { name: optionText, exact: true });
   }
 
   /** Select an option from a dropdown filter column. Opens the dropdown then clicks the option. */
   async selectDropdownFilter(columnName: string, optionText: string): Promise<void> {
-    await this.dropdownFilterByColumn(columnName).click();
+    await (await this.dropdownFilterByColumn(columnName)).click();
     await this.dropdownOption(optionText).click();
   }
 
